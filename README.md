@@ -5,6 +5,8 @@ Simple script for printing using a POS-5890 thermal receipt printer
 
 `python3 thermoprint.py "words go here"`
 
+A `DeviceNotFoundError` probably indicates inadequate permissions.
+
 The input string will be split up into words using spaces.
 Formatted sections begin and end with keywords prefixed with + and -.
 For instance, `+em` and `-em` begin and end an emphasis section.
