@@ -1,5 +1,5 @@
 # thermoprint
-Simple script for printing to receipt paper using an escpos thermal printer
+Simple script for printing to receipt paper using a POS-5890 thermal receipt printer
 
 ### usage
 
