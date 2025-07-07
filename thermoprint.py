@@ -18,7 +18,7 @@ def printout(words):
                 (lhs, rhs) = param.split('=')
                 if lhs == 'size': size = int(rhs)
                 if lhs == 'ec': ec = int(rhs)
-                if lhs == 'center': center = True
+                if lhs == 'center': center = rhs in ['Yes','yes','Y','y','True','true','T','t']
 
         p.qr(content, size=size, ec=ec, center=center)
         # recurse on remaining text
