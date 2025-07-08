@@ -18,10 +18,10 @@ def printout(words):
                 (lhs, rhs) = param.split('=')
                 if lhs == 'size': size = int(rhs)
                 if lhs == 'ec': ec = int(rhs)
-                if lhs == 'center': center = rhs in ['Yes','yes','Y','y','True','true','T','t']
+                if lhs == 'center': center = rhs.lower() in ['yes','y','true','t', '1']
 
         p.qr(content, size=size, ec=ec, center=center)
-        # recurse on remaining text
+        # process remaining text or return
         if(len(sequel)): return printout(sequel.split(' '))
         return True
 
@@ -32,8 +32,9 @@ def printout(words):
         # process qr code and recurse on remaining text
         return qr(sequel, params)
 
-    # keywords: starting with + - to begin or end formatted sections
-    # and : to insert content
+    # keywords: starting with
+    # + to begin or - to end formatted sections
+    # and : to concatenate formatted content
     if word == '+em': p.set(invert=True)
     elif word == '-em': p.set(invert=False)
     elif word == '+big': p.set(double_height=True,double_width=True)
@@ -48,11 +49,11 @@ def printout(words):
     elif word == ':user': p.text(str(os.environ.get('USER')) + ' ')
     else: p.text(word+' ')
 
-    # recurse on remaining text
+    # process remaining text or return
     if(len(sequel) > 0): return printout(sequel)
     return True
 
-# call function
+# call function on the words of the input string
 printout(argv[1].split(' '))
 
 # reset printer settings
