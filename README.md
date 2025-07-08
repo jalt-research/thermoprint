@@ -32,4 +32,5 @@ So that a properly formatted QR section may look like `+qr:ec=1:size=7:center=Fa
 A tweak to take input from the standard input instead of the argument vector.
 This makes the script suitable for announcing notifications from [calcurse](https://github.com/lfos/calcurse).
 This can be achieved by setting calcurse's `notification.command` variable to something like:
-`calcurse --next | sudo python3 /path/to/thermonotif.py`
+`calcurse --next | python3 /path/to/thermonotif.py`
+given suitable permissions.
