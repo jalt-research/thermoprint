@@ -39,3 +39,4 @@ given suitable permissions.
 
 A script to render the `calcurse` todo list as a checklist for printing with `thermonotif.py`.
 Usage: `calcurse -t | python3 checklist.py | python3 thermonotif.py` (given appropriate permissions).
+The printout will not directly display item priority levels, but the order of items is still by priority.
