@@ -34,3 +34,8 @@ This makes the script suitable for announcing notifications from [calcurse](http
 This can be achieved by setting calcurse's `notification.command` variable to something like:
 `calcurse --next | python3 /path/to/thermonotif.py`
 given suitable permissions.
+
+### checklist
+
+A script to render the `calcurse` todo list as a checklist for printing with `thermonotif.py`.
+Usage: `calcurse -t | python3 checklist.py | python3 thermonotif.py` (given appropriate permissions).
