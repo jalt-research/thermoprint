@@ -37,7 +37,7 @@ def printout(words):
     if word == '+em': p.set(invert=True)
     elif word == '-em': p.set(invert=False)
     elif word == '+big': p.set(double_height=True,double_width=True)
-    elif word == '-big': p.set(double_height=False,double_width=False)
+    elif word == '-big': p.set(double_height=False,double_width=False, normal_textsize=True)
     elif word == '+center': p.set(align='center')
     elif word == '-center': p.set(align='left')
     elif word == '+right': p.set(align='right')
