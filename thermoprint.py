@@ -57,4 +57,4 @@ def printout(words):
 printout(argv[1].split(' '))
 
 # reset printer settings
-p.set(double_height=False,double_width=False, invert=False, align='left')
+p.set(normal_textsize=True, double_height=False, double_width=False, invert=False, align='left')
