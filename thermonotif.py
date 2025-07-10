@@ -1,5 +1,5 @@
 from escpos.printer import Usb
-import sys, os, datetime
+import datetime, os, sys, time
 
 argv = sys.argv
 p =  Usb(idVendor=0x0416, idProduct=0x5011, in_ep=0x81, out_ep=0x03, profile="POS-5890")
@@ -18,7 +18,7 @@ def printout(words):
                 (lhs, rhs) = param.split('=')
                 if lhs == 'size': size = int(rhs)
                 if lhs == 'ec': ec = int(rhs)
-                if lhs == 'center': center = rhs in ['Yes','yes','Y','y','True','true','T','t']
+                if lhs == 'center': center = rhs.lower() in ['yes','y','true','t', '1']
 
         p.qr(content, size=size, ec=ec, center=center)
         # recurse on remaining text
@@ -44,11 +44,11 @@ def printout(words):
     elif word == '-right': p.set(align='left')
     elif word == ':br': p.text('\n')
     elif word == ':hr': p.text('\n------------------------\n')
-    elif word == ':time': p.text(t.strftime("%d-%m-%Y %H:%M:%S " ))
+    elif word == ':date': p.text(t.strftime("%d.%m.%Y" ))
+    elif word == ':time': p.text(t.strftime("%d.%m.%Y %H:%M:%S " ))
     elif word == ':user': p.text(str(os.environ.get('USER')) + ' ')
     else: p.text(word+' ')
 
-    # recurse on remaining text
     if(len(sequel) > 0): return printout(sequel)
     return True
 

@@ -1,6 +1,5 @@
 from escpos.printer import Usb
-import sys, os
-import datetime
+import datetime, os, sys
 
 argv = sys.argv
 p =  Usb(idVendor=0x0416, idProduct=0x5011, in_ep=0x81, out_ep=0x03, profile="POS-5890")
