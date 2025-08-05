@@ -3,8 +3,12 @@ import datetime, os, sys, time
 
 argv = sys.argv
 p =  Usb(idVendor=0x0416, idProduct=0x5011, in_ep=0x81, out_ep=0x03, profile="POS-5890")
-p.set(double_height=False,double_width=False, invert=False, align='left')
+p.set(custom_size=False, invert=False, align='left')
 t = datetime.datetime.now()
+
+    # inv  size   w     h     align
+P = [False,False, None, None, 'left']
+    # 0     1     2     3     4 
 
 def printout(words):
 
@@ -21,7 +25,7 @@ def printout(words):
                 if lhs == 'center': center = rhs.lower() in ['yes','y','true','t', '1']
 
         p.qr(content, size=size, ec=ec, center=center)
-        # recurse on remaining text
+
         if(len(sequel)): return printout(sequel.split(' '))
         return True
 
@@ -29,28 +33,30 @@ def printout(words):
     sequel = words[1:]
     if '+qr' in word: 
         params = word.split(':')
-        # process qr code and recurse on remaining text
         return qr(sequel, params)
 
     # keywords: starting with + - to begin or end formatted sections
     # and : to insert content
-    if word == '+em': p.set(invert=True)
-    elif word == '-em': p.set(invert=False)
-    elif word == '+big': p.set(double_height=True,double_width=True)
-    elif word == '-big': p.set(double_height=False,double_width=False, normal_textsize=True)
-    elif word == '+center': p.set(align='center')
-    elif word == '-center': p.set(align='left')
-    elif word == '+right': p.set(align='right')
-    elif word == '-right': p.set(align='left')
+    word=word.strip()
+    if word == '+em': P[0] = True
+    elif word == '-em': P[0] = False 
+    elif word == '+big': (P[1], P[2], P[3]) = (True, 2, 2)
+    elif word == '-big': (P[1], P[2], P[3]) = (False,None,None)
+    elif word == '+center': P[4] = 'center'
+    elif word == '-center': P[4] = 'left'
+    elif word == '+right': P[4] = 'right'
+    elif word == '-right': P[4] = 'left'
     elif word == ':br': p.text('\n')
-    elif word == ':hr': p.text('\n------------------------\n')
+    elif word == ':hr': p.text('\n--------------------------------\n')
     elif word == ':date': p.text(t.strftime("%d.%m.%Y" ))
     elif word == ':time': p.text(t.strftime("%d.%m.%Y %H:%M:%S " ))
     elif word == ':user': p.text(str(os.environ.get('USER')) + ' ')
     else: p.text(word+' ')
 
+    p.set(invert=P[0],custom_size=P[1],width=P[2],height=P[3],align=P[4])
+
     if(len(sequel) > 0): return printout(sequel)
     return True
 
-printout(' '.join(list(sys.stdin)).split(' '))
-p.set(normal_textsize=True, double_height=False, double_width=False, invert=False, align='left')
+printout(' :br '.join(list(sys.stdin)).split(' '))
+p.set(custom_size=False, invert=False, align='left')
