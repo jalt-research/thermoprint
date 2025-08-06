@@ -2,13 +2,13 @@ from escpos.printer import Usb
 import datetime, os, sys, time
 
 argv = sys.argv
-p =  Usb(idVendor=0x0416, idProduct=0x5011, in_ep=0x81, out_ep=0x03, profile="POS-5890")
+p =  Usb(idVendor=0x0416, idProduct=0x5011, in_ep=0x81, out_ep=0x03, profile='POS-5890')
 p.set(custom_size=False, invert=False, align='left')
 t = datetime.datetime.now()
 
-    # inv  custom W     H     align   bold  uline
-P = [False,False, None, None, 'left', False, False]
-    # 0     1     2     3     4       5     6
+    # inv   custom W     H     align   bold  uline
+P = [False, False, None, None, 'left', False, False]
+    # 0     1      2     3     4       5     6
 
 def printout(words):
 
@@ -55,8 +55,8 @@ def printout(words):
     elif word == '-right': P[4] = 'left'
     elif word == ':br': p.text('\n')
     elif word == ':hr': p.text('\n--------------------------------\n')
-    elif word == ':date': p.text(t.strftime("%d.%m.%Y" ))
-    elif word == ':time': p.text(t.strftime("%d.%m.%Y %H:%M:%S " ))
+    elif word == ':date': p.text(t.strftime('%d.%m.%Y' ))
+    elif word == ':time': p.text(t.strftime('%d.%m.%Y %H:%M:%S ' ))
     elif word == ':user': p.text(str(os.environ.get('USER')) + ' ')
     else: p.text(word+' ')
 
